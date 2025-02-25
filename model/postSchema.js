@@ -11,7 +11,7 @@ const postSchema = new mongoose.Schema({
     type: String
   },
   imageUrl: [{
-    type: String
+    type: [String, "Image URL is required for a post"]
   }]
 });
 
