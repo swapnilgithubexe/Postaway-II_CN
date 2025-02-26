@@ -17,6 +17,9 @@ export const registerUser = async (req, res) => {
       email: newUser.email
     })
   } catch (error) {
+    console.log("Error in signup function");
+    res.status(500).json({ message: "Internal Server Error" });
+
 
   }
 }
@@ -40,12 +43,35 @@ export const login = async (req, res) => {
 
     const token = existingUser.generateToken();
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "Strict",
+      maxAge: 24 * 60 * 60 * 1000,
+    })
     res.status(200).json({
       message: "Login successful",
       token
     })
   } catch (error) {
-    console.log(error);
+    console.log("Error in log in function");
+    res.status(500).json({ message: "Internal Server Error" });
+
+  }
+}
+
+//logout 
+export const logout = async (req, res) => {
+  try {
+    res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "Strict", path: "/" })
+    return res.status(200).json({
+      message: "User has been logged out successfully"
+    })
+  } catch (error) {
+    console.log("Error in logout function");
+    res.status(500).json({
+      message: "Internal Server Error"
+    })
 
   }
 }
