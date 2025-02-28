@@ -10,9 +10,10 @@ const postSchema = new mongoose.Schema({
   caption: {
     type: String
   },
-  imageUrl: [{
-    type: [String, "Image URL is required for a post"]
-  }]
+  imageUrl: {
+    type: [String],
+    required: [true, "At least one image URL is required"]
+  }
 });
 
 const postModel = mongoose.model("Post", postSchema);
