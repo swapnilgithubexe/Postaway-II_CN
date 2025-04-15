@@ -21,7 +21,19 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Password is required"],
-    min: [8, "Minimum 8 characters required for a password"]
+    minLength: [8, "Minimum 8 characters required for a password"]
+  },
+  gender: {
+    type: String,
+    required: [true, "Gender is required"],
+    enum: ["Male", "Female", "Others"]
+  },
+  role: {
+    type: String,
+    default: "user",
+    enum: ['user', 'admin'],
+    trim: true,
+    lowercase: true
   }
 });
 
